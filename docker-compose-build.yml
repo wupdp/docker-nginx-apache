@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  apache:
+    build: ./apache/
+    image: apache-service:latest
+    container_name: apache-service-2
+    restart: always
+    networks:
+      - docker-network-2
+  nginx:
+    build: ./nginx/
+    image: nginx-service:latest
+    container_name: nginx-service-2
+    restart: always
+    networks:
+      - docker-network-2
+    ports:
+      - "443:443"
+      - "80:80"
+    depends_on:
+      - apache
+networks:
+  docker-network-2:
+    driver: bridge
