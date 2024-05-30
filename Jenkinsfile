@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout') {
+       /* stage('Checkout') {
             agent { label 'build' }
             steps {
                 script {
@@ -9,14 +9,14 @@ pipeline {
                     sh 'git clone https://github.com/wupdp/docker-nginx-apache.git'
                 }
             }
-        }
+        }*/
         stage('Build Docker Image') {
             agent { label 'build' }
             steps {
                 script {
                     sh '''
-                    docker build -t my-nginx:${BUILD_ID} ./docker-nginx-apache/nginx
-                    docker build -t my-apache:${BUILD_ID} ./docker-nginx-apache/apache
+                    docker build -t my-nginx:${BUILD_ID} ./nginx
+                    docker build -t my-apache:${BUILD_ID} ./apache
                     docker tag my-nginx:${BUILD_ID} my-nginx:latest
                     docker tag my-apache:${BUILD_ID} my-apache:latest
                     '''
