@@ -61,7 +61,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    response=$(curl -s -o /dev/null -w "%{http_code}" http://your-app-url)
+                    response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:80)
                     if [ "$response" = "200" ]; then
                         echo "Healthcheck passed: HTTP status 200"
                     else
