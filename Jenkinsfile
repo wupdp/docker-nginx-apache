@@ -1,15 +1,6 @@
 pipeline {
     agent any
     stages {
-       /* stage('Checkout') {
-            agent { label 'build' }
-            steps {
-                script {
-                    sh 'rm -rf docker-nginx-apache'
-                    sh 'git clone https://github.com/wupdp/docker-nginx-apache.git'
-                }
-            }
-        }*/
         stage('Build Docker Image') {
             agent { label 'build' }
             steps {
@@ -62,6 +53,22 @@ pipeline {
                         docker image prune -af
                         '''
                     }
+                }
+            }
+        }
+        stage('Healthcheck') {
+            agent { label 'deploy' }
+            steps {
+                script {
+                    sh '''
+                    response=$(curl -s -o /dev/null -w "%{http_code}" http://your-app-url)
+                    if [ "$response" = "200" ]; then
+                        echo "Healthcheck passed: HTTP status 200"
+                    else
+                        echo "Healthcheck failed: HTTP status $response"
+                        exit 1
+                    fi
+                    '''
                 }
             }
         }
