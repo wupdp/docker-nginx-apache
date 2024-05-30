@@ -59,7 +59,7 @@ pipeline {
                         docker rm apache || true
                         docker run -d --name apache --network network $USERNAME/my-apache:latest
                         docker run -d --name nginx --network network -p "80:80" $USERNAME/my-nginx:latest
-                        docker image prune -f
+                        docker image prune -af
                         '''
                     }
                 }
