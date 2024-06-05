@@ -3,20 +3,23 @@ services:
   apache:
     build: ./apache/
     image: apache-service:latest
-    container_name: apache-service-2
+    container_name: apache-service
     restart: always
+    volumes:
+      - ./log/apache2/:/var/log/apache2/
     networks:
       - docker-network-2
   nginx:
     build: ./nginx/
     image: nginx-service:latest
-    container_name: nginx-service-2
+    container_name: nginx-service
     restart: always
+    volumes:
+      - ./log/nginx/:/var/log/nginx/
     networks:
       - docker-network-2
     ports:
-      - "443:443"
-      - "80:80"
+      - "8090:80"
     depends_on:
       - apache
 networks:
